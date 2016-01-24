@@ -351,8 +351,10 @@ class MainWindow:
 				self.urlLoginServer = tempRealm.loginServer
 
 				if tempRealm.queueURL == "":
+                                        print "qqq - no realm queue"
 					self.LaunchGame()
 				else:
+                                        print "qqq - realm queue: " + tempRealm.queueURL + "\tLogin Server: " + self.urlLoginServer
 					self.EnterWorldQueue(tempRealm.queueURL)
 			else:
 				self.AddLog("[E10] Error getting realm status")

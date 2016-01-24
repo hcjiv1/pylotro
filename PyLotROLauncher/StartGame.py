@@ -84,9 +84,8 @@ class StartGame:
 		self.command = ""
 		self.arguments = []
 
-		gameParams = argTemplate.replace("{0}", account).replace("{1}", server)\
-			.replace("{2}", ticket).replace("{3}", chatServer).replace("{4}", language)
-
+		gameParams = argTemplate.replace("{SUBSCRIPTION}", account).replace("{LOGIN}", server).replace("{GLS}", ticket).replace("{CHAT}", chatServer).replace("{LANG}", language)
+                
 		if not hiResEnabled:
 			gameParams = gameParams + " --HighResOutOfDate"
 
@@ -212,6 +211,11 @@ class StartGame:
 		self.finished = False
 
 		self.uiLog.btnStop.setText("Abort")
+
+                message = self.command
+                for arg in self.arguments:
+                        message = message + " " + arg
+                        
 		self.process.start(self.command, self.arguments)
 
 		self.winMain.hide()

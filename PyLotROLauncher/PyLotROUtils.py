@@ -471,7 +471,8 @@ class WorldQueueConfig:
 		self.patchProductCode = ""
 		self.worldQueueURL = ""
 		self.worldQueueParam = ""
-
+                self.authServerUrl = ""
+                
 		try:
 			webservice, post = WebConnection(urlConfigServer)
 
@@ -482,6 +483,8 @@ class WorldQueueConfig:
 
 			tempxml = string_decode(webresp.read())
 
+                        print "qqq - tempxml: " + tempxml
+                        
 			filename = "%s%slauncher.config" % (baseDir, osType.appDir)
 			outfile = open(filename, "w")
 			outfile.write(tempxml)
@@ -495,9 +498,9 @@ class WorldQueueConfig:
 				nodes = doc.getElementsByTagName("appSettings")[0].childNodes
 				for node in nodes:
 					if node.nodeType == node.ELEMENT_NODE:
-						if node.getAttribute("key") == "GameClient.Filename":
+						if node.getAttribute("key") == "GameClient.WIN32.Filename":
 							self.gameClientFilename = node.getAttribute("value")
-						elif node.getAttribute("key") == "GameClient.ArgTemplate":
+						elif node.getAttribute("key") == "GameClient.WIN32.ArgTemplate":
 							self.gameClientArgTemplate = node.getAttribute("value")
 						elif node.getAttribute("key") == "URL.NewsFeed":
 							self.newsFeedURL = node.getAttribute("value")
@@ -509,6 +512,8 @@ class WorldQueueConfig:
 							self.worldQueueURL = node.getAttribute("value")
 						elif node.getAttribute("key") == "WorldQueue.TakeANumber.Parameters":
 							self.worldQueueParam = node.getAttribute("value")
+                                                elif node.getAttribute("key") == "GameClient.Arg.authserverurl":
+                                                        self.authServerUrl = node.getAttribute("value")
 
 				self.loadSuccess = True
 		except:
